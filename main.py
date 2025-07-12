@@ -12,9 +12,32 @@ viewer = ARCViewer()
 viewer.process.model.process.fileLoc = train_path
 viewer.process.model.handlers.load()
 
-# %%
-ques = ArcQuestion(reader.data["00d62c1b"])
-ArrayTools.copy2Clipboard(ques.get(4, Labels.output))
+from src.objectedness import Main as GridMain, GridObjectGetter, GridObject
+ques = ArcQuestion(reader.data["00dbd492"])
+# ArrayTools.copy2Clipboard(ques.get(1, Labels.output))
 
 # %%
-ArrayTools.copy2Clipboard(ques.get(1, Labels.input))
+
+
+def copyRes(ind=0):
+    inp = ques.get(ind, Labels.input)
+    eout = sol_00d62c1b(inp).arr.tolist()   
+    ArrayTools.copy2Clipboard(eout)
+def copyInp (ind=0):
+    inp = ques.get(ind, Labels.input)
+    ArrayTools.copy2Clipboard(inp)
+def copyOut (ind=0):
+    inp = ques.get(ind, Labels.output)
+    ArrayTools.copy2Clipboard(inp)
+
+# %%
+# copyres()
+copyInp()
+# %%
+copyOut()
+# %%
+
+def sol_00dbd492(inp):
+    res = Field(inp)
+    
+    
