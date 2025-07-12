@@ -13,15 +13,18 @@ class GridObject:
         self.area =x*y
         p = ArrayTools.flatten(self.rect_obj)
         self.uid = ",".join(map(str, p))
-        k = set(p)
-        k.remove(0)
-        self.value = k.pop()
+        x,y = list(self.obj)[0]
+        self.value = self.grid[x][y]
     def replace_value(self, new_value):
         for i in range(self.shape[0]):
             for j in range(self.shape[1]):
                 if self.rect_obj[i][j] == self.value:
                     self.rect_obj[i][j] = new_value
         self.value = new_value
+    def touchesBoundry(self ):
+        p1,p2 = self.bounding_rect
+        s1,s2 = ArrayTools.shape(self.grid)
+        return p1[0] == 0 or p1[1] == 0 or p2[0] == s1-1 or p2[1] == s2-1
 class GridObjectGetter:
     def __init__(self):
         self.set_diagonal(False)
@@ -35,7 +38,7 @@ class GridObjectGetter:
         self.rows, self.cols = len(grid), len(grid[0])
     def is_valid(self, r: int, c: int) -> bool:
         grid = self.grid
-        return 0 <= r < self.rows and 0 <= c < self.cols and grid[r][c] != 0 and (r, c) not in self._visited
+        return 0 <= r < self.rows and 0 <= c < self.cols and self.vals_allower(grid[r][c]) and (r, c) not in self._visited
     def flood_fill(self, start_r: int, start_c: int) -> Set[Tuple[int, int]]:
         """Find all connected pixels using BFS."""
         component = set()
@@ -49,7 +52,7 @@ class GridObjectGetter:
             
             for dr, dc in self._directions:
                 new_r, new_c = r + dr, c + dc
-                if self.is_valid(new_r, new_c) and self.is_same_condition((r, c), (start_r, start_c), component):
+                if self.is_valid(new_r, new_c) and self.is_same_condition((new_r, new_c), (start_r, start_c), component):
                     queue.append((new_r, new_c))
         
         return component
@@ -58,7 +61,7 @@ class GridObjectGetter:
         objects = []
         for r in range(self.rows):
             for c in range(self.cols):
-                if self.grid[r][c] != 0 and (r, c) not in self._visited:
+                if self.vals_allower(self.grid[r][c]) and (r, c) not in self._visited:
                     component = self.flood_fill(r, c)
                     objects.append(component)
         
@@ -69,6 +72,8 @@ class GridObjectGetter:
             gb.set_objects(obj)
             res.append(gb)
         return res
+    def vals_allower(self, val: int) -> bool:
+        return val != 0
     def get_val (self, point: Tuple[int, int]) -> int:
         return self.grid[point[0]][point[1]]
     def is_same_condition(self, point: Tuple[int, int], other_point: Tuple[int, int], *args) -> bool:
