@@ -1,6 +1,7 @@
 from collections import deque
 from typing import List, Set, Tuple
 from .tools import ArrayTools
+import copy
 class GridObject:
     def set_grid(self, grid):
         self.grid = grid
@@ -16,12 +17,12 @@ class GridObject:
         x,y = list(self.obj)[0]
         self.value = self.grid[x][y]
     def replace_value(self, new_value):
-        for i in range(self.shape[0]):
-            for j in range(self.shape[1]):
-                if self.rect_obj[i][j] == self.value:
-                    self.rect_obj[i][j] = new_value
+        grid = copy.deepcopy(self.grid)
+        for x,y in self.obj:
+            grid[x][y] = new_value
+        self.rect_obj = ArrayTools.subGrid(grid, self.bounding_rect[0], self.bounding_rect[1])
         self.value = new_value
-    def touchesBoundry(self ):
+    def touches_boundry(self ):
         p1,p2 = self.bounding_rect
         s1,s2 = ArrayTools.shape(self.grid)
         return p1[0] == 0 or p1[1] == 0 or p2[0] == s1-1 or p2[1] == s2-1
