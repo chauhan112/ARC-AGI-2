@@ -45,6 +45,7 @@ class Solver009d5c81:
         return res
 
 def sol_00d62c1b(inp):
+    from .objectedness import GridObjectGetter
     grg = GridObjectGetter()
     grg.set_grid(inp)
     grg.vals_allower = lambda x: True

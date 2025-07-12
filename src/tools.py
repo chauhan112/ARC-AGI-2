@@ -19,7 +19,7 @@ class ArcQuestion:
             res = solver(ob[Labels.input])
             assert res.isEqual(Field(ob[Labels.output])), (ob[Labels.output], res.get())
     def getTestOutput(self, solver):
-        return [solver(ob[Labels.input]) for ob in self.question[Labels.test]]
+        return [{"output": solver(ob[Labels.input]).arr} for ob in self.question[Labels.test]]
 
 class ArrayTools:
     def flipVertically(arr):
