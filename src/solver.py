@@ -43,3 +43,16 @@ class Solver009d5c81:
         res.set_shape(ArrayTools.shape(inp))
         res.place(b.bounding_rect[0],Field(b.rect_obj) )
         return res
+
+def sol_00d62c1b(inp):
+    grg = GridObjectGetter()
+    grg.set_grid(inp)
+    grg.vals_allower = lambda x: True
+    objs = grg.extract_objects()
+    mo =list(filter(lambda x: x.value == 0 and not x.touchesBoundry(), objs))
+    for m in mo:
+        m.replace_value(4)
+    res = Field(inp.copy())
+    for m in mo:
+        res.place(m.bounding_rect[0],Field(m.rect_obj) )
+    return res
