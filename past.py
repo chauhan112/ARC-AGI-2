@@ -28,11 +28,17 @@ ques2.verify(sol_007bbfb7)
 
 # %%
 # Question 3
-import json
-import pprint
 from src.tools import ArcQuestion
 from src.solver import Solver009d5c81
 ques3 = ArcQuestion(reader.data["009d5c81"])
 solver = Solver009d5c81()
 solver.set_question(ques3)
 ques3.verify(solver.solve)
+
+# %%
+# Question 4
+from src.tools import ArcQuestion
+from src.solver import sol_00d62c1b
+ques2 = ArcQuestion(reader.data["00d62c1b"])
+ques2.verify(sol_00d62c1b)
+
