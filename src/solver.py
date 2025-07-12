@@ -50,10 +50,44 @@ def sol_00d62c1b(inp):
     grg.set_grid(inp)
     grg.vals_allower = lambda x: True
     objs = grg.extract_objects()
-    mo =list(filter(lambda x: x.value == 0 and not x.touchesBoundry(), objs))
+    mo =list(filter(lambda x: x.value == 0 and not x.touches_boundry(), objs))
     for m in mo:
         m.replace_value(4)
     res = Field(inp.copy())
     for m in mo:
         res.place(m.bounding_rect[0],Field(m.rect_obj) )
     return res
+
+class Solver00dbd492:
+    def get_objs(self, inp):
+        from .objectedness import GridObjectGetter
+        grg = GridObjectGetter()
+        grg.set_grid(inp)
+        grg.vals_allower = lambda x: True
+        objs = grg.extract_objects()
+        mo: List[GridObject] =list(filter(lambda x: x.value == 0 and not x.touches_boundry(), objs))
+        return mo
+    def set_question(self, question: ArcQuestion):
+        self.question = question
+        self.process()
+    def process(self):
+        valMap = {}
+        for ob in self.question.question[Labels.train]:
+            inp = ob[Labels.input]
+            out = ob[Labels.output]
+            mo = self.get_objs(inp)
+            for m in mo:
+                x,y = list(m.obj)[0]
+                ov = out[x][y]
+                if m.uid in valMap:
+                    assert valMap[m.uid] == ov
+                else:
+                    valMap[m.uid] = ov
+        self.valMap = valMap
+    def solve(self, inp):
+        objs = self.get_objs(inp)
+        res = Field(inp)
+        for m in objs:
+            m.replace_value(self.valMap[m.uid])
+            res.place(m.bounding_rect[0],Field(m.rect_obj) )
+        return res

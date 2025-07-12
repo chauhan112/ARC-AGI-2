@@ -32,9 +32,9 @@ def copyOut (ind=0):
 
 # %%
 # copyres()
-copyInp()
+copyInp(1)
 # %%
-copyOut()
+copyOut(1)
 # %%
 
 def sol_00dbd492(inp):
