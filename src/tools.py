@@ -30,7 +30,7 @@ class ArrayTools:
     def copy2Clipboard(arr):
         import pyperclip
         pyperclip.copy(str(arr))
-    def subGrid(arr: List[List[int]], point1: Tuple[int, int], point2: Tuple[int, int]):
+    def crop(arr: List[List[int]], point1: Tuple[int, int], point2: Tuple[int, int]):
         x1,y1 = point1
         x2,y2 = point2
         return [row[y1:y2+1] for row in arr[x1:x2+1]]
@@ -46,6 +46,9 @@ class ArrayTools:
         return len(arr), len(arr[0])
     def flatten(arr: List[List[int]]):
         return [x for row in arr for x in row]
+    def replace(arr: List[List[int]], prev_value: int, value: int):
+        return [[value if x == prev_value else x for x in row] for row in arr]
+    
 class Field:
     def __init__(self, arr):
         self.arr = np.array(arr, dtype=int)
