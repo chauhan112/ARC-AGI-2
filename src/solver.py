@@ -1,4 +1,5 @@
 from .tools import ArrayTools, Field, ArcQuestion,Labels
+from typing import List
 def sol_00576224(inp):
     finp = ArrayTools.flipHorizontally(inp)
     av = [Field(inp), Field(finp)]
@@ -90,4 +91,62 @@ class Solver00dbd492:
         for m in objs:
             m.replace_value(self.valMap[m.uid])
             res.place(m.bounding_rect[0],Field(m.rect_obj) )
+        return res
+
+class Solver017c7c7b:
+    def check_period(self, arr: List[List[int]], s:int, s2:int):
+        i = s
+        j = s2
+        while i < s2:
+            if arr[i] != arr[j]:
+                return False
+            i += 1
+            j += 1
+            if j == len(arr):
+                break
+        return True
+
+
+    def find_min_period(self, arr: List[List[int]]):
+        arrToString = lambda row: "".join(map(str, row))
+        arrString = list(map(arrToString, arr))
+        i = 0
+        j = 1
+        while j < len(arrString):
+            if arrString[i] == arrString[j] and self.check_period(arrString, i, j):
+                return j - i
+            else:
+                j += 1
+        return 0
+    
+    def getField(self, arr: List[List[int]]):
+        def place(firstPoint, arr):
+            assert isinstance(firstPoint, tuple), "firstPoint must be of type tuple"
+            assert isinstance(arr, Field), "arr must be of type Field"
+            sx,sy = arr.shape()
+            x,y = firstPoint
+            sp, sq = f.shape()
+            for i in range(sx):
+                p = x+i
+                if p >= sp:
+                    break
+                for j in range(sy):
+                    q = y+j
+                    if q >= sq:
+                        break
+                    f.arr[p][q] = arr.arr[i][j]
+        f = Field(arr)
+        f.place = place
+
+        return f
+
+    def solve(self, inp):
+        res = self.getField([])
+        res.set_shape((9,3))
+        period = self.find_min_period(inp)
+        i = 0
+        periodArr = ArrayTools.replace(inp, 1, 2)
+        while i < 9:
+            res.place((i, 0), Field(periodArr))
+            i += period
         return res
