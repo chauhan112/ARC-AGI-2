@@ -2,6 +2,8 @@ from collections import deque
 from typing import List, Set, Tuple
 from .tools import ArrayTools
 import copy
+import pprint
+
 class GridObject:
     def set_grid(self, grid):
         self.grid = grid
@@ -26,6 +28,14 @@ class GridObject:
         p1,p2 = self.bounding_rect
         s1,s2 = ArrayTools.shape(self.grid)
         return p1[0] == 0 or p1[1] == 0 or p2[0] == s1-1 or p2[1] == s2-1
+    def __str__(self) -> str:
+        return "\n".join([
+        f"shape: {self.shape}",
+        f"area: {self.area}",
+        f"value: {self.value}",
+        f"{pprint.pformat(self.rect_obj)}"
+        ])
+
 class GridObjectGetter:
     def __init__(self):
         self.set_diagonal(False)
