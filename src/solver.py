@@ -200,3 +200,18 @@ def sol_025d127b(inp):
         mob = move_top(ob)
         res.place(mob.bounding_rect[0], mob)
     return res
+
+def sol_03560426(inp):
+    objs = GridMain.get_objs(inp)
+    res = Field([])
+    res.set_shape(ArrayTools.shape(inp))
+    sobjs = sorted(objs, key=lambda x: x.bounding_rect[0][1])
+
+    x,y = 0,0
+    for o in sobjs:
+        # print(o)
+        res.place((x,y), Field(o.rect_obj))
+        p, q = o.shape
+        y += q-1
+        x += p-1
+    return res

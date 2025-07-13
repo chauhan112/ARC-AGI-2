@@ -66,3 +66,10 @@ from src.tools import ArcQuestion
 from src.solver import sol_025d127b
 ques2 = ArcQuestion(reader.data["025d127b"])
 ques2.verify(sol_025d127b)
+
+# %%
+# Question 8
+from src.tools import ArcQuestion
+from src.solver import sol_03560426
+ques2 = ArcQuestion(reader.data["03560426"])
+ques2.verify(sol_03560426)
