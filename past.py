@@ -51,3 +51,18 @@ ques = ArcQuestion(reader.data["00dbd492"])
 solver = Solver00dbd492()
 solver.set_question(ques)
 ques.verify(solver.solve)
+
+# %%
+# Question 6
+from src.tools import ArcQuestion
+from src.solver import Solver017c7c7b
+ques = ArcQuestion(reader.data["017c7c7b"])
+solver = Solver017c7c7b()
+ques.verify(solver.solve)
+
+# %%
+# Question 7
+from src.tools import ArcQuestion
+from src.solver import sol_025d127b
+ques2 = ArcQuestion(reader.data["025d127b"])
+ques2.verify(sol_025d127b)
