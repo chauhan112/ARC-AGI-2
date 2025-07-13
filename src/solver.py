@@ -150,3 +150,53 @@ class Solver017c7c7b:
             res.place((i, 0), Field(periodArr))
             i += period
         return res
+
+def sol_025d127b(inp):
+    def isBase(ob, parentObj):
+        (bcpx, bcpy) = parentObj.shape
+        _, (ox, oy) = ob.bounding_rect
+        if (bcpx - 1) == ox and (bcpy - 1) == oy:
+            return True
+        return False
+
+    def getField(arr):
+        def place(firstPoint, arr):
+            sx,sy = arr.shape()
+            x,y = firstPoint
+            sp, sq = f.shape()
+            for i in range(sx):
+                p = x+i
+                if p >= sp:
+                    break
+                for j in range(sy):
+                    q = y+j
+                    if q >= sq:
+                        break
+                    prev_val = f.arr[p][q]
+                    if prev_val == 0:
+                        f.arr[p][q] = arr.arr[i][j]
+                    
+        f = Field(arr)
+        f.place = place
+        return f
+    def move_top(obj):
+        obObj = GridMain.get_objs(obj.rect_obj,False )
+        res = getField([])
+        res.set_shape(obj.shape)
+        res.bounding_rect = obj.bounding_rect
+        for o in obObj:
+            if isBase(o, obj):
+                res.place(o.bounding_rect[0], Field(o.rect_obj))
+            else:
+                x, y = o.bounding_rect[0]
+                res.place((x, y+ 1), Field(o.rect_obj))
+        return res
+    res = Field([])
+    res.set_shape(ArrayTools.shape(inp))
+    from src.objectedness import Main as GridMain
+
+    objs = GridMain.get_objs(inp, True)
+    for ob in objs:
+        mob = move_top(ob)
+        res.place(mob.bounding_rect[0], mob)
+    return res
