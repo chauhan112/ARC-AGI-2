@@ -8,7 +8,7 @@ class GridObject:
     def set_objects(self, obj):
         self.obj = obj
         self.bounding_rect = ArrayTools.bounding_rect(obj)
-        self.rect_obj = ArrayTools.subGrid(self.grid, self.bounding_rect[0], self.bounding_rect[1])
+        self.rect_obj = ArrayTools.crop(self.grid, self.bounding_rect[0], self.bounding_rect[1])
         self.shape = ArrayTools.shape(self.rect_obj)
         x,y = self.shape
         self.area =x*y
@@ -20,7 +20,7 @@ class GridObject:
         grid = copy.deepcopy(self.grid)
         for x,y in self.obj:
             grid[x][y] = new_value
-        self.rect_obj = ArrayTools.subGrid(grid, self.bounding_rect[0], self.bounding_rect[1])
+        self.rect_obj = ArrayTools.crop(grid, self.bounding_rect[0], self.bounding_rect[1])
         self.value = new_value
     def touches_boundry(self ):
         p1,p2 = self.bounding_rect
