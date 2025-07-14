@@ -202,6 +202,7 @@ def sol_025d127b(inp):
     return res
 
 def sol_03560426(inp):
+    from .objectedness import Main as GridMain
     objs = GridMain.get_objs(inp)
     res = Field([])
     res.set_shape(ArrayTools.shape(inp))
