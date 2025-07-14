@@ -2,6 +2,7 @@ from src.twoD_tools import Vector, ExtendTools, BoundingRect
 from collections import namedtuple
 from ..objectedness import GridObject, Main as GridMain
 from ..tools import ArrayTools, Field
+from basic import Main as ObjMaker
 
 DirRes = namedtuple("DirRes", ["val", "rect", "arr", "dir"])
 class SolverExtenderTools:
@@ -85,4 +86,53 @@ class SolverExtender045e512c:
         while ExtendTools.intersects(area, rect) or ExtendTools.is_inside_rect(rect, area):
             rect = SolverExtenderTools.displace_by_shape(rect.top_left, self._shape, dirRes.dir)
             field.place(rect.top_left, Field(ob.rect_obj))
-    
+def Solver05269061():
+    def get_coord(ind, shape):
+        sx, sy = shape
+        if ind < sx:
+            return ind, 0
+        yco = ind - sx
+        if yco >= (sy-1):
+            raise ValueError("Index out of range")
+        return sx-1, yco + 1
+    def iterator(shape):
+        i = 0
+        while True:
+            try:
+                yield get_coord(i, shape)
+            except ValueError:
+                break
+            i += 1
+    def get_encoding(arr):
+        cm = {}
+        shp = ArrayTools.shape(arr)
+        for i, (x,y) in enumerate(iterator(shp)):
+            v = arr[x][y]
+            if v != 0 and v not in cm:
+                cm[v] = x+y
+        
+        ncm = {}
+        t = len(cm)
+        for v in cm:
+            k = cm[v]
+            ncm[k%t] = v
+        return ncm, t
+
+    def fill_diagonal(arr, val, bottom_left_cord, shape):
+        x,y = bottom_left_cord
+        sx,sy = shape
+        while x >= 0 and y < sy:
+            arr[x][y] = val
+            x -= 1
+            y += 1
+    def solve(inp):
+        import copy
+        cm, t = get_encoding(inp)
+        inpCopy = copy.deepcopy(inp)
+        shp = ArrayTools.shape(inp)
+        for x,y in iterator(shp):
+            v = x+y
+            fill_diagonal(inpCopy, cm[v%t], (x,y), shp)
+        return Field(inpCopy)
+    s = ObjMaker.variablesAndFunction(locals())
+    return s
