@@ -28,6 +28,8 @@ class GridObject:
         p1,p2 = self.bounding_rect
         s1,s2 = ArrayTools.shape(self.grid)
         return p1[0] == 0 or p1[1] == 0 or p2[0] == s1-1 or p2[1] == s2-1
+    def translate(self, r: int, c: int) -> Set[Tuple[int, int]]:
+        return {(x+r, y+c) for x,y in self.obj}
     def __str__(self) -> str:
         return "\n".join([
         f"shape: {self.shape}",
@@ -35,7 +37,6 @@ class GridObject:
         f"value: {self.value}",
         f"{pprint.pformat(self.rect_obj)}"
         ])
-
 class GridObjectGetter:
     def __init__(self):
         self.set_diagonal(False)
