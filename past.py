@@ -82,3 +82,17 @@ ques = ArcQuestion(reader.data["045e512c"])
 solver = SolverExtender045e512c()
 ques.verify(solver.solve)
 # %%
+# Question 10
+from src.tools import ArcQuestion
+from src.solvers.solverExtend import Solver05269061
+ques = ArcQuestion(reader.data["05269061"])
+solver = Solver05269061()
+ques.verify(solver.handlers.solve)
+
+# %%
+# Question 11
+# from src.tools import ArcQuestion
+# from src.solvers.solverExtend import Solver05269061
+# ques = ArcQuestion(reader.data["05269061"])
+# solver = Solver05269061()
+# ques.verify(solver.handlers.solve)
