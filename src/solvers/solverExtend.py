@@ -25,7 +25,27 @@ class SolverExtenderTools:
         gb.set_grid(grid.grid)
         gb.set_objects(grid.obj)
         return gb
-    
+    @staticmethod
+    def getField(inp):
+        def place(firstPoint, arr):
+            assert isinstance(firstPoint, tuple), "firstPoint must be of type tuple"
+            assert isinstance(arr, Field), "arr must be of type Field"
+            sx,sy = arr.shape()
+            sp, sq = res.shape()
+            x,y = firstPoint
+            for i in range(sx):
+                nx = x+i
+                if nx >= sp or nx < 0:
+                    continue
+                for j in range(sy):
+                    ny = y+j
+                    if ny >= sq or ny < 0:
+                        continue
+                    if res.arr[nx][ny] == 0:
+                        res.arr[x+i][y+j] = arr.arr[i][j]
+        res = Field(inp)
+        res.place = place
+        return res
 class SolverExtender045e512c:
     def getDirValMap(self, inp, mainObj:GridObject):
         dirValMap = {}
@@ -46,7 +66,7 @@ class SolverExtender045e512c:
         self._shape = Vector(*mainObj.shape)
         dirValMap = self.getDirValMap(inp, mainObj)
 
-        res = self.getField([])
+        res = SolverExtenderTools.getField([])
         res.set_shape(ArrayTools.shape(inp))
         res.place(mainObj.bounding_rect[0], Field(mainObj.rect_obj))
         self._area = ExtendTools.bounding_rect(((0,0), res.shape()))
@@ -65,23 +85,4 @@ class SolverExtender045e512c:
         while ExtendTools.intersects(area, rect) or ExtendTools.is_inside_rect(rect, area):
             rect = SolverExtenderTools.displace_by_shape(rect.top_left, self._shape, dirRes.dir)
             field.place(rect.top_left, Field(ob.rect_obj))
-    def getField(self,arr):
-        def place(firstPoint, arr):
-            assert isinstance(firstPoint, tuple), "firstPoint must be of type tuple"
-            assert isinstance(arr, Field), "arr must be of type Field"
-            sx,sy = arr.shape()
-            sp, sq = res.shape()
-            x,y = firstPoint
-            for i in range(sx):
-                nx = x+i
-                if nx >= sp or nx < 0:
-                    continue
-                for j in range(sy):
-                    ny = y+j
-                    if ny >= sq or ny < 0:
-                        continue
-                    if res.arr[nx][ny] == 0:
-                        res.arr[x+i][y+j] = arr.arr[i][j]
-        res = Field(arr)
-        res.place = place
-        return res
+    
