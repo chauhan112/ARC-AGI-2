@@ -13,7 +13,7 @@ viewer.process.model.process.fileLoc = train_path
 viewer.process.model.handlers.load()
 
 from src.objectedness import Main as GridMain, GridObjectGetter, GridObject
-ques = ArcQuestion(reader.data["025d127b"])
+ques = ArcQuestion(reader.data["045e512c"])
 # ArrayTools.copy2Clipboard(ques.get(1, Labels.output))
 
 
@@ -27,6 +27,12 @@ def copyInp (ind=0):
 def copyOut (ind=0):
     inp = ques.get(ind, Labels.output)
     ArrayTools.copy2Clipboard(inp)
-
-
+def copF(f):
+    cop(f.arr.tolist())
+cop = ArrayTools.copy2Clipboard
+ci = copyInp
+co = copyOut
+cr = copyRes
+qg = ques.get
 # %%
+
