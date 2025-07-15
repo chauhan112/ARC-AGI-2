@@ -84,8 +84,14 @@ ques.verify(solver.handlers.solve)
 
 # %%
 # Question 11
-# from src.tools import ArcQuestion
-# from src.solvers.solverExtend import Solver05269061
-# ques = ArcQuestion(reader.data["05269061"])
-# solver = Solver05269061()
+from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solver05a7bcf2 import Solver05a7bcf2, ToGoDirection
+solver = Solver05a7bcf2()
+ques = ArcQuestion(reader.data["05a7bcf2"])
+ques.verify(solver.handlers.solve)
+
+# %%
+# # Question 12
+# from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solver05a7bcf2 import Solver05a7bcf2, ToGoDirection
+# solver = Solver05a7bcf2()
+# ques = ArcQuestion(reader.data["05a7bcf2"])
 # ques.verify(solver.handlers.solve)
