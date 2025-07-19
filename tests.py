@@ -3,13 +3,13 @@
 
 # %%
       
-#    0520fde7   
+#  0520fde7   
 #      
 #  0962bcdd 
 from src import Reader
 train_path = r"C:\Users\rajab\Desktop\stuffs\TimeLine\2025\07_July\ARC-AGI-2\data\arc-agi_training_challenges.json"
 reader = Reader(train_path)
-from src import ArcQuestion
+from src import ArcQuestion, Labels
 from src import arc_agi as agi
 from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solverExtend import SolverExtender045e512c, Solver05269061
 from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solver05a7bcf2 import Solver05a7bcf2
@@ -39,6 +39,9 @@ solvers = {
 }
 for key, (requires_question, solver) in solvers.items():
     ques = ArcQuestion(reader.data[key])
+    print(f"Running solver for {key}...")
+    print(ques.get())
+    print(ques.get(0, Labels.output))
     if requires_question:
         sq = solver()
         sq.set_question(ques)
