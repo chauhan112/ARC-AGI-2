@@ -2,10 +2,7 @@
 
 
 # %%
-      
-#  0520fde7   
-#      
-#  0962bcdd 
+
 from src import Reader
 train_path = r"C:\Users\rajab\Desktop\stuffs\TimeLine\2025\07_July\ARC-AGI-2\data\arc-agi_training_challenges.json"
 reader = Reader(train_path)
@@ -17,6 +14,7 @@ from src.rlib.timeline.t2025.July.arc_agi_2.solvers.Solver0607ce86 import Solver
 from src.rlib.timeline.t2025.July.arc_agi_2.solvers.Solver05f2a901 import Solver05f2a901
 from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solver0692e18c import Solver0692e18c
 from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solvers import Solver_06df4c85, solve_070dd51e,solver08ed6ac7, Solver09629e4f
+from src.rlib.timeline.t2025.July.arc_agi_2.solvers.solvers import Solver0962bcdd, Solver0520fde7
 solvers = {
     "00576224": (False, agi.sol_00576224),
     "007bbfb7": (False, agi.sol_007bbfb7),
@@ -36,9 +34,12 @@ solvers = {
     "070dd51e": (False, solve_070dd51e),
     "08ed6ac7": (True, lambda: solver08ed6ac7().handlers),
     "09629e4f": (False, Solver09629e4f().handlers.solve),
+    "0962bcdd": (False, Solver0962bcdd().handlers.solve),
+    "0520fde7": (False, Solver0520fde7().handlers.solve),
 }
 for key, (requires_question, solver) in solvers.items():
     ques = ArcQuestion(reader.data[key])
+    print()
     print(f"Running solver for {key}...")
     print(ques.get())
     print(ques.get(0, Labels.output))

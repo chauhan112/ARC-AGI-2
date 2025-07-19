@@ -30,57 +30,13 @@ co = copyOut
 cr = copyRes
 qg = ques.get
 # %%
-
+from src.rlib.timeline.t2025.July.arc_agi_2.solvers.moreTools import FieldPlacers
 inp = qg()
 cop(inp)
 
 # %%
-i= 0
-co(i)
-# %%
-ci(i)
-# %%
-objs = GridMain.get_objs(inp, True)
-objs
-# %%
-bigObjs = [x for x in objs if x.area > 1]
-# %%
-bigObjs
-
+co()
 # %%
 
-ob = bigObjs[0]
-
-
 # %%
-ob.rect_obj
-# %%
-def replace_color(ob, colA, colB):
-    ob.replace_value(color)
-    return ob
-def getX(size, val):
-    res = []
-    for i in range(size):
-        row = [0] * size
-        row[i] = val
-        row[-1-i] = val
-        res.append(row)
-    return res
-def getPlus(size, val):
-    res = []
-    for i in range(size):
-        if i == size // 2:
-            row = [val] * size
-        else:
-            row = [0] * size
-            row[size//2] = val
-        res.append(row)
-    return res
-def placer(firstPoint, arr, inst=None):
-    
-    inst.place(firstPoint, Field(arr))
-    return inst
-# %%
-cop(getPlus(5, 1))
-# %%
-Field
+ques.verify(Solver0520fde7().handlers.solve)
