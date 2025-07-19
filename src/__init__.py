@@ -6,5 +6,5 @@ from .rlib.basic import Main as ObjMaker
 from .rlib.timeline.t2025.July.arc_agi_2.twoD_tools import Vector
 
 from .rlib.timeline.t2025.July import arc_agi_2 as arc_agi
-import sys
-sys.path.insert(0, "src/rlib")
+# import sys
+# sys.path.insert(0, "src/rlib")
